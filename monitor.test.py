@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Test runner for StringCalculator
 This file is expected by the GitHub Actions workflow
@@ -14,19 +16,20 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from test_string_calculator import TestStringCalculator
 from test_edge_cases import TestStringCalculatorEdgeCases
 
-
 if __name__ == '__main__':
-    # Create test loader and suite
+    # Create test loader
     loader = unittest.TestLoader()
-    suite = unittest.TestSuite()
-
-    # Collect tests from both classes
-    suite.addTests(loader.loadTestsFromTestCase(TestStringCalculator))
-    suite.addTests(loader.loadTestsFromTestCase(TestStringCalculatorEdgeCases))
-
-    # Run with verbosity
+    
+    # Create test suite
+    test_suite = unittest.TestSuite()
+    
+    # Add all test cases from our test classes
+    test_suite.addTest(loader.loadTestsFromTestCase(TestStringCalculator))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestStringCalculatorEdgeCases))
+    
+    # Run the tests
     runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
-
-    # Exit with proper code for CI/CD
+    result = runner.run(test_suite)
+    
+    # Exit with proper code
     sys.exit(0 if result.wasSuccessful() else 1)
